@@ -7,4 +7,9 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
+      <PackageReference Include="NUnit" Version="4.0.0" />
+    </ItemGroup>
+
 </Project>

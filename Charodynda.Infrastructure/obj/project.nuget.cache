@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "OLIUizAagJJrKM2xzZm3B6xdJOsdK2Ua7GzC+pxD1AToWkfYxERKQ/jNMox0k7CSkkcLsAhvQxLMzIVtObwMQg==",
+  "success": true,
+  "projectFilePath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\anast\\.nuget\\packages\\htmlagilitypack\\1.11.54\\htmlagilitypack.1.11.54.nupkg.sha512"
+  ],
+  "logs": []
+}

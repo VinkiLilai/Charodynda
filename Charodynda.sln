@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharodyndaApp", "CharodyndaApp\CharodyndaApp.csproj", "{1AFE6745-4CCB-4291-A8E8-14FF0D840A2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharoTests", "CharoTests\CharoTests.csproj", "{F7A8FCAD-5C2C-4385-8C7E-2A763A81E2EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.Infrastructure", "Charodynda.Infrastructure\Charodynda.Infrastructure.csproj", "{608C689C-799D-47E8-92E6-912B8F8ECDB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AFE6745-4CCB-4291-A8E8-14FF0D840A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AFE6745-4CCB-4291-A8E8-14FF0D840A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AFE6745-4CCB-4291-A8E8-14FF0D840A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AFE6745-4CCB-4291-A8E8-14FF0D840A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A8FCAD-5C2C-4385-8C7E-2A763A81E2EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A8FCAD-5C2C-4385-8C7E-2A763A81E2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A8FCAD-5C2C-4385-8C7E-2A763A81E2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A8FCAD-5C2C-4385-8C7E-2A763A81E2EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
