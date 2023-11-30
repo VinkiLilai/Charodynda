@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharoTests", "CharoTests\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.Infrastructure", "Charodynda.Infrastructure\Charodynda.Infrastructure.csproj", "{608C689C-799D-47E8-92E6-912B8F8ECDB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.Domain", "Charodynda.Domain\Charodynda.Domain.csproj", "{C7BEE1B5-FCE2-470B-9484-13E2F33FB331}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608C689C-799D-47E8-92E6-912B8F8ECDB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7BEE1B5-FCE2-470B-9484-13E2F33FB331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7BEE1B5-FCE2-470B-9484-13E2F33FB331}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7BEE1B5-FCE2-470B-9484-13E2F33FB331}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7BEE1B5-FCE2-470B-9484-13E2F33FB331}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

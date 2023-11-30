@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "3vSIxrclJpbufScE9cSmNQ+2O6C/DW7OtVGRVJdptJlcXpLlTvgTCyCnrW0ClHFo8MdM/hmkGxgaGdn/ZSiAEw==",
+  "dgSpecHash": "/kS4NW4aAiVlsbFSfAZjeMzTA19N8a7J174jE9p5vznuZCzpRgpXmtDtX5ELn1OFfa42ljs7KPIMs/cHFLmeDg==",
   "success": true,
-  "projectFilePath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
+  "projectFilePath": "D:\\Git\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\anast\\.nuget\\packages\\htmlagilitypack\\1.11.54\\htmlagilitypack.1.11.54.nupkg.sha512",
-    "C:\\Users\\anast\\.nuget\\packages\\nunit\\4.0.0\\nunit.4.0.0.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\htmlagilitypack\\1.11.54\\htmlagilitypack.1.11.54.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\nunit\\4.0.0\\nunit.4.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -122,19 +122,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\anast\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
+      "projectUniqueName": "D:\\Git\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
       "projectName": "CharodyndaApp",
-      "projectPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
-      "packagesPath": "C:\\Users\\anast\\.nuget\\packages\\",
-      "outputPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharodyndaApp\\obj\\",
+      "projectPath": "D:\\Git\\Charodynda\\CharodyndaApp\\CharodyndaApp.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Git\\Charodynda\\CharodyndaApp\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\anast\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

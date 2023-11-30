@@ -73,19 +73,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\anast\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
+      "projectUniqueName": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
       "projectName": "Charodynda.Infrastructure",
-      "projectPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\anast\\.nuget\\packages\\",
-      "outputPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\obj\\",
+      "projectPath": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\anast\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

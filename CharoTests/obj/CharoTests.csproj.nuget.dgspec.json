@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharoTests\\CharoTests.csproj": {}
+    "D:\\Git\\Charodynda\\CharoTests\\CharoTests.csproj": {}
   },
   "projects": {
-    "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj": {
+    "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
         "projectName": "Charodynda.Infrastructure",
-        "projectPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\anast\\.nuget\\packages\\",
-        "outputPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\obj\\",
+        "projectPath": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\anast\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,17 +69,21 @@
         }
       }
     },
-    "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharoTests\\CharoTests.csproj": {
+    "D:\\Git\\Charodynda\\CharoTests\\CharoTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharoTests\\CharoTests.csproj",
+        "projectUniqueName": "D:\\Git\\Charodynda\\CharoTests\\CharoTests.csproj",
         "projectName": "CharoTests",
-        "projectPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharoTests\\CharoTests.csproj",
-        "packagesPath": "C:\\Users\\anast\\.nuget\\packages\\",
-        "outputPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\CharoTests\\obj\\",
+        "projectPath": "D:\\Git\\Charodynda\\CharoTests\\CharoTests.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Git\\Charodynda\\CharoTests\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\anast\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -89,8 +97,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj": {
-                "projectPath": "D:\\Publichno Obosralsa\\Charodynda\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj"
+              "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj": {
+                "projectPath": "D:\\Git\\Charodynda\\Charodynda.Infrastructure\\Charodynda.Infrastructure.csproj"
               }
             }
           }
