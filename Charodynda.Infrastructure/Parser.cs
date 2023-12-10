@@ -1,18 +1,37 @@
 ﻿using HtmlAgilityPack;
-using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Charodynda.Infrastructure;
 
-public class Parser
+public static class Parser
 {
-    public Dictionary<string, string> ParseOneSpellPage(string link)
+    public static IEnumerable<Dictionary<string, string>> ParseSpells()
+        => GetAllSpellLinks()
+            .Select(ParseOneSpellPage);
+
+    private static IEnumerable<string> GetAllSpellLinks()
+    {
+        var doc = GetHtml("https://dnd.su/spells/");
+        var linkListNode = doc.DocumentNode.SelectNodes("//script")[14];
+        var linkListNodeText = linkListNode.InnerText;
+        var links = new List<string>();
+        const string pattern = "\"link\":\"(.*?)\"";
+        foreach (Match match in Regex.Matches(linkListNodeText, pattern))
+        {
+            var link = match.Groups[1].Value.Replace("\\/", "/");
+            links.Add("https://dnd.su" + link);
+        }
+        return links;
+    }
+
+    public static Dictionary<string, string> ParseOneSpellPage(string link)
     {
         var page = GetHtml(link);
         var spell = new Dictionary<string, string>
         {
             {"Name", page.DocumentNode.SelectSingleNode("//h2[@class='card-title']").ChildNodes[0].InnerHtml}
         };
-        
+
         var spellParams = page.DocumentNode.SelectSingleNode("//ul[@class='params']").ChildNodes;
         var spellParamsNameDict = GetParamsNameDict();
 
@@ -41,7 +60,7 @@ public class Parser
                 continue;
             spell[spellParamsNameDict[paramInfo[0]]] = paramInfo[1];
         }
-        
+
         return spell;
     }
 
@@ -50,7 +69,7 @@ public class Parser
         var info = node.InnerText.Split(",").Select(s => s.Trim()).ToList();
         return ValueTuple.Create(info[0].FirstOrDefault().ToString(), info[1]);
     }
-    
+
     private static HtmlDocument GetHtml(string link) => new HtmlWeb().Load(link);
 
     private static Dictionary<string, string> GetParamsNameDict() => new()
