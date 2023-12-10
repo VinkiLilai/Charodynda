@@ -2,11 +2,25 @@ namespace Charodynda.Domain;
 
 public struct Damage
 {
-    public Damage(string type, IReadOnlyCollection<string> damagePerLvl)
-    {
-        Type = type;
-        DamagePerLvl = damagePerLvl;
-    }
-    public string Type { get; }
-    public IReadOnlyCollection<string> DamagePerLvl;
+    public DamageType Type { get; }
+    public Dice Dice { get; }
+}
+
+public enum DamageType
+{
+    Bludgeoning, 
+    Piercing,
+    Slashing,
+    
+    Acid,
+    Cold, 
+    Fire,
+    Lightning, 
+    Poison, 
+    Thunder, 
+    
+    Force, 
+    Necrosis,
+    Psychic,
+    Radiant
 }
