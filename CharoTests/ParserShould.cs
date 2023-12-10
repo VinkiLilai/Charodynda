@@ -1,7 +1,6 @@
 using Charodynda.Infrastructure;
-using NUnit.Framework;
 
-namespace CharodyndaApp.Infrastructure;
+namespace CharodyndaApp.Tests;
 
 [TestFixture]
 public class ParserShould

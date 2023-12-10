@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Charodynda.Domain;
 
 public class Character
@@ -14,11 +16,21 @@ public class Character
     
     public IReadOnlyCollection<Spell> Spells;
     public IReadOnlyCollection<int> SpellSlots;
+    public IReadOnlyDictionary<Classes, int> LevelsInClasses;
+    // Логика - возможность мультикласса, а также автоматический расчёт количества ячеек
+    // (тот, кто им займётся, возненавидит колдуна)
+
     public string Intelligence { get; }
     public string Wisdom { get; }
     public string Charisma { get; }
-    
-    public void SpellUsage(){} //TODO: реализовать применение заклинания: вычесть ячейку если требуется, вывести уровень
 
-    public void SlotsUpdate(){} //TODO: реализовать восстановление ячеек, например, при отдыхе
+    public void SpellUsage() //TODO: реализовать применение заклинания: вычесть ячейку если требуется, вывести уровень
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SlotsUpdate() //TODO: реализовать восстановление ячеек, например, при отдыхе
+    {
+        throw new NotImplementedException(); 
+    } 
 }
