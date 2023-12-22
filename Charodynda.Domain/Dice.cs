@@ -1,4 +1,6 @@
-﻿namespace Charodynda.Domain;
+﻿using System;
+
+namespace Charodynda.Domain;
 
 // Причина отделения кубиков от урона - в том, что, собственно,
 // кубики и урон разные сущности. Урон - чуть более узкая, так как

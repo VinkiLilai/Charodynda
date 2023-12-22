@@ -1,4 +1,6 @@
-﻿namespace Charodynda.Domain;
+﻿using System;
+
+namespace Charodynda.Domain;
 
 // Эти магические чиселки - бинарные флаги.
 // Это нужно для того, чтобы можно было хранить заклинания,
