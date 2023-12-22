@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Charodynda.Domain;
 
-public record Spell
+public record struct Spell
 {
     public string Name { get; }
     public int Level { get; }
