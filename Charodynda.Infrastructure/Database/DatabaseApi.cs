@@ -59,6 +59,11 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
         query.ExecuteNonQuery();
     }
 
+    public IEnumerable<T> GetAll(string table)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Dispose()
     {
         connection.Close();

@@ -7,4 +7,5 @@ public interface IDatabaseApi<T>
     
     void RemoveById(string table, int id);
     void Add(string table, T obj);
+    IEnumerable<T> GetAll(string table);
 }

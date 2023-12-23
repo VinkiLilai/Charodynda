@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Charodynda.Domain\Charodynda.Domain.csproj" />
       <ProjectReference Include="..\Charodynda.Infrastructure\Charodynda.Infrastructure.csproj" />
     </ItemGroup>
 
