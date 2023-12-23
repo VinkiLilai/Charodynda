@@ -7,49 +7,69 @@ namespace Charodynda.Domain;
 
 public class Character
 {
-    public Character(HashSet<Spell> spells, List<int> spellSlots, int level, int intelligence,
-        int wisdom, int charisma)
+    public Character(string name, HashSet<Spell> spells, List<int> spellSlots, Dictionary<Classes, int> levelsInClasses,
+        int intelligence, int wisdom, int charisma)
     {
         this.spells = spells;
         this.spellSlots = spellSlots;
-        Level = level;
         this.intelligence = intelligence;
+        this.levelsInClasses = levelsInClasses;
         this.wisdom = wisdom;
         this.charisma = charisma;
     }
-    
+
     public Character()
     {
         spells = new HashSet<Spell>();
         spellSlots = new List<int>();
     }
 
+    private string name;
     private HashSet<Spell> spells;
     private List<int> spellSlots;
+    private Dictionary<Classes, int> levelsInClasses;
     private int intelligence;
     private int wisdom;
     private int charisma;
-    
-    public int Level { get; private set; }
-    
+
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
     public IReadOnlyCollection<int> SpellSlots => spellSlots;
     public IReadOnlyDictionary<Classes, int> LevelsInClasses;
 
+    public string Name
+    {
+        get => name;
+        set => name = value == string.Empty ? "NoName" : value; 
+    }
+
     // Логика - возможность мультикласса, а также автоматический расчёт количества ячеек
     // (тот, кто им займётся, возненавидит колдуна)
 
-    public int Intelligence { 
+    public int Intelligence
+    {
         get => intelligence;
-        set { if (value.CheckCharacteristics()) intelligence = value; }
+        set
+        {
+            if (value.CheckCharacteristics()) intelligence = value;
+        }
     }
-    public int Wisdom { 
+
+    public int Wisdom
+    {
         get => wisdom;
-        set { if (value.CheckCharacteristics()) wisdom = value; }
+        set
+        {
+            if (value.CheckCharacteristics()) wisdom = value;
+        }
     }
-    public int Charisma { 
+
+    public int Charisma
+    {
         get => charisma;
-        set { if (value.CheckCharacteristics()) charisma = value; }
+        set
+        {
+            if (value.CheckCharacteristics()) charisma = value;
+        }
     }
 
     public void SpellUsage() //TODO: реализовать применение заклинания: вычесть ячейку если требуется, вывести уровень
@@ -62,13 +82,12 @@ public class Character
         throw new NotImplementedException();
     }
 
-    public void LevelUp() //TODO: обновить количество ячеек заклинаний, повысить сам уровень заклинателя
+    public void ChangeClassLevel(Classes characterClass, int level)
     {
-        throw new NotImplementedException();
-    }
-    
-    public void LevelUp(int level) //TODO: LevelUp но сразу до определенного уровня
-    {
+        if (level < 1)
+            throw new ArgumentException("Level cannot be less than the first level");
+        levelsInClasses[characterClass] = level;
+        //TODO: Поменять набор ячеек заклинания в соответствии с новым уровнем
         throw new NotImplementedException();
     }
 
@@ -80,6 +99,18 @@ public class Character
     public void RemoveSpell(Spell spell)
     {
         spells.Remove(spell);
+    }
+
+    public void AddClass(Classes characterClass)
+    {
+        if (!levelsInClasses.ContainsKey(characterClass))
+            levelsInClasses.Add(characterClass, 1);
+    }
+    
+    public void RemoveClass(Classes characterClass)
+    {
+        if (levelsInClasses.ContainsKey(characterClass))
+            levelsInClasses.Remove(characterClass);
     }
 }
 
