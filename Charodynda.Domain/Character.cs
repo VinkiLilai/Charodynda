@@ -8,7 +8,7 @@ namespace Charodynda.Domain;
 
 public class Character
 {
-    public Character(string name, HashSet<Spell> spells, List<int> spellSlots, Dictionary<Classes, int> levelsInClasses,
+    public Character(string name, HashSet<Spell> spells, List<int> spellSlots, Dictionary<Class, int> levelsInClasses,
         int intelligence, int wisdom, int charisma)
     {
         this.spells = spells;
@@ -34,7 +34,7 @@ public class Character
     [JsonProperty("WarlockSpellSlots")]
     private (int level, LevelSpellSlots spellSlots) warlockSpellSlots;
     [JsonProperty("LevelsInClasses")]
-    private Dictionary<Classes, int> levelsInClasses;
+    private Dictionary<Class, int> levelsInClasses;
     [JsonProperty("Intelligence")]
     private int intelligence;
     [JsonProperty("Wisdom")]
@@ -44,7 +44,7 @@ public class Character
 
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
     public IReadOnlyCollection<int> SpellSlots => spellSlots;
-    public IReadOnlyDictionary<Classes, int> LevelsInClasses;
+    public IReadOnlyDictionary<Class, int> LevelsInClasses;
 
     public string Name
     {
@@ -92,7 +92,7 @@ public class Character
         throw new NotImplementedException();
     }
 
-    public void ChangeClassLevel(Classes characterClass, int level)
+    public void ChangeClassLevel(Class characterClass, int level)
     {
         if (level < 1)
             throw new ArgumentException("Level cannot be less than the first level");
@@ -111,13 +111,13 @@ public class Character
         spells.Remove(spell);
     }
 
-    public void AddClass(Classes characterClass)
+    public void AddClass(Class characterClass)
     {
         if (!levelsInClasses.ContainsKey(characterClass))
             levelsInClasses.Add(characterClass, 1);
     }
     
-    public void RemoveClass(Classes characterClass)
+    public void RemoveClass(Class characterClass)
     {
         if (levelsInClasses.ContainsKey(characterClass))
             levelsInClasses.Remove(characterClass);

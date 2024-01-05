@@ -15,7 +15,7 @@ namespace Charodynda.Domain;
 // Наличие None - правило хорошего тона
 
 [Flags]
-public enum Classes
+public enum Class
 {
     None = 0,                         // 0x00000000000
     Artificer = 1,                    // 0x00000000001

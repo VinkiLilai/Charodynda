@@ -21,7 +21,7 @@ public record struct Spell
     public bool Concetration { get; }
     public bool Ritual { get; }
     
-    public Classes Classes;
+    public Class Class;
     public IReadOnlyCollection<string> Archetypes;
 
     public string Descripton { get; }
