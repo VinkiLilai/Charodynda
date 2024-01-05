@@ -8,21 +8,9 @@ namespace Charodynda.Domain;
 
 public class Character
 {
-    public Character(string name, HashSet<Spell> spells, List<int> spellSlots, Dictionary<Class, int> levelsInClasses,
-        int intelligence, int wisdom, int charisma)
-    {
-        this.spells = spells;
-        this.spellSlots = spellSlots;
-        this.intelligence = intelligence;
-        this.levelsInClasses = levelsInClasses;
-        this.wisdom = wisdom;
-        this.charisma = charisma;
-    }
-
     public Character()
     {
         spells = new HashSet<Spell>();
-        spellSlots = this.InitSpellSlots();
     }
 
     [JsonProperty("Name")]
@@ -43,8 +31,8 @@ public class Character
     private int charisma;
 
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
-    public IReadOnlyCollection<int> SpellSlots => spellSlots;
-    public IReadOnlyDictionary<Class, int> LevelsInClasses;
+    public IReadOnlyDictionary<int, LevelSpellSlots> SpellSlots => spellSlots;
+    public IReadOnlyDictionary<Class, int> LevelsInClasses => levelsInClasses;
 
     public string Name
     {
@@ -82,14 +70,27 @@ public class Character
         }
     }
 
-    public void SpellUsage() //TODO: реализовать применение заклинания: вычесть ячейку если требуется, вывести уровень
+    public void SpellUsage(int level)
     {
-        throw new NotImplementedException();
+        if (levelsInClasses.ContainsKey(Class.Warlock))
+            if (levelsInClasses.Count == 1 || warlockSpellSlots.level == level)
+            {
+                warlockSpellSlots.spellSlots.Count--;
+                return;
+            }
+        if (!spellSlots.ContainsKey(level))
+            throw new AggregateException("There's no spell slot this level to use");
+        spellSlots[level].Count--;
     }
 
-    public void SlotsUpdate() //TODO: реализовать восстановление ячеек, например, при отдыхе
+    public void SlotsUpdate()
     {
-        throw new NotImplementedException();
+        if (levelsInClasses.ContainsKey(Class.Warlock))
+            warlockSpellSlots.spellSlots.UpdateSpellSlots();
+        if (levelsInClasses.All(pair => pair.Key == Class.Warlock))
+            return;
+        foreach (var slots in spellSlots.Values)
+            slots.UpdateSpellSlots();
     }
 
     public void ChangeClassLevel(Class characterClass, int level)
@@ -114,7 +115,11 @@ public class Character
     public void AddClass(Class characterClass)
     {
         if (!levelsInClasses.ContainsKey(characterClass))
+        {
             levelsInClasses.Add(characterClass, 1);
+            if (characterClass == Class.Warlock)
+                warlockSpellSlots = // инициализировать его короче
+        }
     }
     
     public void RemoveClass(Class characterClass)
