@@ -27,7 +27,8 @@ public class Character
 
     [JsonProperty("Name")]
     private string name;
-    [JsonProperty("Spells")]
+    [JsonProperty("SpellIds")]
+    private HashSet<int> spellIds;
     private HashSet<Spell> spells;
     [JsonProperty("SpellSlots")]
     private Dictionary<int, LevelSpellSlots> spellSlots;
