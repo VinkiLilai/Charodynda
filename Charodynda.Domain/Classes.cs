@@ -17,19 +17,17 @@ namespace Charodynda.Domain;
 [Flags]
 public enum Classes
 {
-    None = 0,          // 0x0000000000000
-    Artificer = 1,     // 0x0000000000001
-    Barbarian = 2,     // 0x0000000000010
-    Bard = 4,          // 0x0000000000100
-    Cleric = 8,        // 0x0000000001000
-    Druid = 16,        // 0x0000000010000
-    Fighter = 32,      // 0x0000000100000
-    Monk = 64,         // 0x0000001000000
-    Paladin = 128,     // 0x0000010000000
-    Ranger = 256,      // 0x0000100000000
-    Rogue = 512,       // 0x0001000000000
-    Sorcerer = 1024,   // 0x0010000000000
-    Warlock = 2048,    // 0x0100000000000
-    Wizard = 4096,     // 0x1000000000000
-    Any = 8191         // 0x1111111111111
+    None = 0,                         // 0x00000000000
+    Artificer = 1,                    // 0x00000000001
+    Warlock = 2,                      // 0x00000000010
+    Bard = 4,                         // 0x00000000100
+    Cleric = 8,                       // 0x00000001000
+    Druid = 16,                       // 0x00000010000
+    FighterEldritchKnight = 32,       // 0x00000100000
+    Wizard = 64,                      // 0x00001000000
+    Paladin = 128,                    // 0x00010000000
+    Ranger = 256,                     // 0x00100000000
+    RogueArcaneTrickster = 512,       // 0x01000000000
+    Sorcerer = 1024,                  // 0x10000000000
+    Any = 2047                        // 0x11111111111
 }

@@ -24,7 +24,7 @@ public struct Dice
         Size = size;
     }
     
-    public int Throw()
+    public int Roll()
     {
         var result = 0;
         for (var i = 0; i < Amount; i++) 

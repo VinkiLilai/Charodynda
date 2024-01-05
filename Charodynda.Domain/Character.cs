@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Charodynda.Domain;
 
@@ -21,15 +22,24 @@ public class Character
     public Character()
     {
         spells = new HashSet<Spell>();
-        spellSlots = new List<int>();
+        spellSlots = this.InitSpellSlots();
     }
 
+    [JsonProperty("Name")]
     private string name;
+    [JsonProperty("Spells")]
     private HashSet<Spell> spells;
-    private List<int> spellSlots;
+    [JsonProperty("SpellSlots")]
+    private Dictionary<int, LevelSpellSlots> spellSlots;
+    [JsonProperty("WarlockSpellSlots")]
+    private (int level, LevelSpellSlots spellSlots) warlockSpellSlots;
+    [JsonProperty("LevelsInClasses")]
     private Dictionary<Classes, int> levelsInClasses;
+    [JsonProperty("Intelligence")]
     private int intelligence;
+    [JsonProperty("Wisdom")]
     private int wisdom;
+    [JsonProperty("Charisma")]
     private int charisma;
 
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
