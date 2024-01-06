@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Charodynda.Infrastructure.Database;
 using Newtonsoft.Json;
 
 namespace Charodynda.Domain;
@@ -13,23 +14,15 @@ public class Character
         spells = new HashSet<Spell>();
     }
 
-    [JsonProperty("Name")]
-    private string name;
-    [JsonProperty("SpellIds")]
-    private HashSet<int> spellIds;
+    [JsonProperty("Name")] private string name;
+    [JsonProperty("SpellIds")] private HashSet<int> spellIds;
     private HashSet<Spell> spells;
-    [JsonProperty("SpellSlots")]
-    private Dictionary<int, LevelSpellSlots> spellSlots;
-    [JsonProperty("WarlockSpellSlots")]
-    private (int level, LevelSpellSlots spellSlots) warlockSpellSlots;
-    [JsonProperty("LevelsInClasses")]
-    private Dictionary<Class, int> levelsInClasses;
-    [JsonProperty("Intelligence")]
-    private int intelligence;
-    [JsonProperty("Wisdom")]
-    private int wisdom;
-    [JsonProperty("Charisma")]
-    private int charisma;
+    [JsonProperty("SpellSlots")] private Dictionary<int, LevelSpellSlots> spellSlots;
+    [JsonProperty("WarlockSpellSlots")] private (int level, LevelSpellSlots spellSlots) warlockSpellSlots;
+    [JsonProperty("LevelsInClasses")] private Dictionary<Class, int> levelsInClasses;
+    [JsonProperty("Intelligence")] private int intelligence;
+    [JsonProperty("Wisdom")] private int wisdom;
+    [JsonProperty("Charisma")] private int charisma;
 
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
     public IReadOnlyDictionary<int, LevelSpellSlots> SpellSlots => spellSlots;
@@ -38,7 +31,7 @@ public class Character
     public string Name
     {
         get => name;
-        set => name = value == string.Empty ? "NoName" : value; 
+        set => name = value == string.Empty ? "NoName" : value;
     }
 
     // Логика - возможность мультикласса, а также автоматический расчёт количества ячеек
@@ -115,14 +108,13 @@ public class Character
 
     public void AddClass(Class characterClass)
     {
-        if (!levelsInClasses.ContainsKey(characterClass))
-        {
-            levelsInClasses.Add(characterClass, 1);
-            if (characterClass == Class.Warlock)
-                warlockSpellSlots = // инициализировать его короче
-        }
+        if (levelsInClasses.ContainsKey(characterClass))
+            return;
+        levelsInClasses.Add(characterClass, 1);
+        if (characterClass == Class.Warlock)
+            warlockSpellSlots = this.GetInitialWarlockSpellSlots();
     }
-    
+
     public void RemoveClass(Class characterClass)
     {
         if (levelsInClasses.ContainsKey(characterClass))
@@ -133,4 +125,37 @@ public class Character
 internal static class CharacterExtensions
 {
     public static bool CheckCharacteristics(this int value) => value >= 0;
+
+    public static Dictionary<int, LevelSpellSlots> GetInitialSpellSlots(this Character character)
+    {
+        var dbSpellSlots = new DatabaseApi<Dictionary<int, LevelSpellSlots>>("SpellSlots.db");
+        var totalCharacterLevel = CalculateTotalCharacterLevel(character.LevelsInClasses);
+        return dbSpellSlots.FindById("SpellSlots", totalCharacterLevel);
+    }
+
+    public static (int level, LevelSpellSlots spellSlots) GetInitialWarlockSpellSlots(this Character character)
+    {
+        var dbSpellSlots = new DatabaseApi<(int level, LevelSpellSlots spellSlots)>("SpellSlots.db");
+        var warlockLevel = character.LevelsInClasses[Class.Warlock];
+        return dbSpellSlots.FindById("SpellSlots", warlockLevel);
+    }
+
+    public static int CalculateTotalCharacterLevel(IReadOnlyDictionary<Class, int> levelsInClasses)
+    {
+        var totalLevel = 0;
+        var halfLevelClasses = new HashSet<Class>() {Class.Paladin, Class.Ranger};
+        var oneThirdLevelClasses = new HashSet<Class>() {Class.FighterEldritchKnight, Class.RogueArcaneTrickster};
+        foreach (var pair in levelsInClasses)
+        {
+            if (halfLevelClasses.Contains(pair.Key))
+                totalLevel += (int) Math.Floor((double) pair.Value / 2);
+            else if (oneThirdLevelClasses.Contains(pair.Key))
+                totalLevel += (int) Math.Floor((double) pair.Value / 3);
+            else if (pair.Key is Class.Artificer)
+                totalLevel += (int) Math.Ceiling((double) pair.Value / 2);
+            else if (pair.Key != Class.Warlock)
+                totalLevel += pair.Value;
+        }
+        return totalLevel;
+    }
 }
