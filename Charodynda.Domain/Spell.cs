@@ -2,34 +2,62 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
+using Charodynda.Infrastructure;
 
 namespace Charodynda.Domain;
 
 public record struct Spell
 {
+    [JsonProperty("Name")]
+    [DBFilter("Name", FilterType.Pattern)]
     public string Name { get; }
+    
+    [JsonProperty("Level")]
+    [DBFilter("Level", FilterType.StrictMany)]
     public int Level { get; }
+    
+    [JsonProperty("School")]
+    [DBFilter("School", FilterType.StrictMany)]
     public string School { get; }
+    
+    [JsonProperty("Source")]
+    [DBFilter("Source", FilterType.StrictMany)]
     public string Source { get; }
     
+    [JsonProperty("CastingTime")]
     public string CastingTime { get; }
+    [JsonProperty("Range")]
     public string Range { get; }
+    [JsonProperty("Duration")]
     public string Duration { get; }
     
-    public IReadOnlyCollection<char> Components;
-    public IReadOnlyCollection<string> Materials;
+    [JsonProperty("Components")]
+    [DBFilter("Components", FilterType.PatternMany)]
+    public string Components;
+    [JsonProperty("CastingTime")]
+    public string Materials { get; }
+    [JsonProperty("Concentration")]
+    [DBFilter("Concentration", FilterType.Strict)]
     public bool Concetration { get; }
+    [JsonProperty("Ritual")]
+    [DBFilter("Ritual", FilterType.Strict)]
     public bool Ritual { get; }
     
+    [JsonProperty("Class")]
+    [DBFilter("Class", FilterType.Sql, "Class | value != 0")]
     public Class Class;
+    [JsonProperty("Archetypes")]
     public IReadOnlyCollection<string> Archetypes;
 
+    [JsonProperty("Description")]
     public string Descripton { get; }
     
+    [JsonProperty("DamageType")]
     private DamageType damageType; 
     // Я не совсем уверен, нужен ли нам тип урона отдельным полем, но решил на всякий случай добавить
     // (теоретически - нет, так как эта информация будет получаться из лямбды в объекте Damage).
     
+    [JsonProperty("Damage")]
     private Func<int, int, Damage> damage { get; }
     // Урон заклинания зависит от уровня персонажа (в случае заговоров)
     // или от уровня ячейки (в случае заклинаний). Поэтому урон заклинания,
