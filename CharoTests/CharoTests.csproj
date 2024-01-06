@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Charodynda.Infrastructure\Charodynda.Infrastructure.csproj" />
+        <ProjectReference Include="..\Charodynda.Domain\Charodynda.Domain.csproj" />
     </ItemGroup>
 
 </Project>
