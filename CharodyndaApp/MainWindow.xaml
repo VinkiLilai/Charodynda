@@ -5,8 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CharodyndaApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Height="600" Width="920"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+        
+        <Border Background="#EAE0D5">
+                <Grid>
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel>
+                                <RadioButton Content="Spells"
+                                             Height="200"
+                                             Foreground="GreenYellow"
+                                             FontSize="14"
+                                             Style="{StaticResource SpellsButtonTheme}"/>
+                                
+                                <RadioButton Content="Characters"
+                                             Height="200"
+                                             Foreground="GreenYellow"
+                                             FontSize="14"
+                                             Style="{StaticResource SpellsButtonTheme}"
+                                             IsChecked="True"/>
+                                
+                                <RadioButton Content="Help"
+                                             Height="200"
+                                             Foreground="GreenYellow"
+                                             FontSize="14"
+                                             Style="{StaticResource SpellsButtonTheme}"/>
+                        </StackPanel>
+                        
+                        <TextBox Width="400"
+                                 Height="45"
+                                 VerticalContentAlignment="Center"
+                                 VerticalAlignment="Top"
+                                 HorizontalAlignment="Left"
+                                 Margin="10,75,5,5"
+                                 Grid.Column="1"
+                                 Style="{StaticResource ModernTextbox}"/>
+                        
+                        <Button Grid.Column="1"
+                                Width="45"
+                                Height="45"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Margin="400,75,0,0"
+                                Style="{StaticResource LittleButton}">
+                                <Image Source="Images/lens.png" 
+                                       Stretch="Uniform"
+                                       Margin="5"/>
+                        </Button>
+                        
+                        <Button Grid.Column="1"
+                                Width="45"
+                                Height="45"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Margin="460,75,0,0"
+                                Style="{StaticResource LittleButton}">
+                                <Image Source="Images/funnel.png" 
+                                       Stretch="Uniform"
+                                       Margin="5"/>
+                        </Button>
+                        
+                        <Button Grid.Column="1"
+                                Content="Отдых"
+                                FontSize="18"
+                                Width="90"
+                                Height="45"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Margin="580,75,0,0"
+                                Style="{StaticResource LittleButton}">
+                        </Button>
+                        
+                                <!-- <ComboBox Grid.Row="1" -->
+                        <!--           Grid.Column="1" -->
+                        <!--           Width="200" -->
+                        <!--           Height="25" -->
+                        <!--           VerticalAlignment="Top" -->
+                        <!--           HorizontalAlignment="Left" -->
+                        <!--           Margin="5,0,0,0"> -->
+                        <!--         <TextBlock>Колдун</TextBlock> -->
+                        <!--         <TextBlock>Бард</TextBlock> -->
+                        <!--         <TextBlock>Хуй</TextBlock> -->
+                        <!--         <TextBlock>Пизда</TextBlock> -->
+                        <!-- </ComboBox> -->
+                        
+                </Grid>
+        </Border>
 </Window>

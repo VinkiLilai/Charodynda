@@ -4,6 +4,25 @@
              xmlns:local="clr-namespace:CharodyndaApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <ResourceDictionary>
+             <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary>
+                     <ResourceDictionary.Source>
+                         Theme/SpellsButtonTheme.xaml
+                     </ResourceDictionary.Source>
+                 </ResourceDictionary>
+                 <ResourceDictionary>
+                     <ResourceDictionary.Source>
+                         Theme/SearchBoxTheme.xaml
+                     </ResourceDictionary.Source>
+                 </ResourceDictionary>
+                 <ResourceDictionary>
+                     <ResourceDictionary.Source>
+                         Theme/LittleButtonTheme.xaml
+                     </ResourceDictionary.Source>
+                 </ResourceDictionary>
+                 
+             </ResourceDictionary.MergedDictionaries>
+         </ResourceDictionary>
     </Application.Resources>
 </Application>
