@@ -35,7 +35,7 @@ public record struct Spell
     [DBFilter("Components", FilterType.PatternMany)]
     public string Components { get; }
 
-    [JsonProperty("CastingTime")]
+    [JsonProperty("Materials")]
     public string Materials { get; }
     [JsonProperty("Concentration")]
     [DBFilter("Concentration", FilterType.Strict)]
