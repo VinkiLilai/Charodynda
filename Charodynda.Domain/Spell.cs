@@ -8,6 +8,7 @@ namespace Charodynda.Domain;
 
 public record struct Spell
 {
+    public readonly int id;
     [JsonProperty("Name")]
     [DBFilter("Name", FilterType.Pattern)]
     public string Name { get; }

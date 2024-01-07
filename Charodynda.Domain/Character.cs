@@ -9,17 +9,6 @@ namespace Charodynda.Domain;
 
 public class Character
 {
-    public Character(string name, HashSet<Spell> spells, List<int> spellSlots, Dictionary<Class, int> levelsInClasses,
-        int intelligence, int wisdom, int charisma)
-    {
-        this.spells = spells;
-        //this.spellSlots = spellSlots;
-        this.intelligence = intelligence;
-        this.levelsInClasses = levelsInClasses;
-        this.wisdom = wisdom;
-        this.charisma = charisma;
-    }
-
     public Character()
     {
         spells = new HashSet<Spell>();
@@ -35,7 +24,7 @@ public class Character
     private Dictionary<int, LevelSpellSlots>? spellSlots;
 
     [JsonProperty("WarlockSpellSlots")] 
-    public (int level, LevelSpellSlots spellSlots)? WarlockSpellSlots { get; private set; }
+    public (int level, LevelSpellSlots spellSlots)? WarlockSpellSlots { get; set; }
 
     [JsonProperty("LevelsInClasses")]
     private Dictionary<Class, int> levelsInClasses;
@@ -151,7 +140,7 @@ public class Character
     
 }
 
-internal static class CharacterExtensions
+public static class CharacterExtensions
 {
     public static bool CheckCharacteristics(this int value) => value >= 0;
 
