@@ -10,13 +10,20 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
     private static PropertyInfo[] properties;
     private static FieldInfo[] fields;
     private static Dictionary<string, DBFilterAttribute> filters;
+    private static string tableName;
+    private static string idField = null;
+    
     static DatabaseApi()
     {
-        properties = typeof(T).GetProperties().Where(
+        var type = typeof(T);
+
+        tableName = $"\"{type.Name}\"";
+        
+        properties = type.GetProperties().Where(
             property => property.GetCustomAttributes(typeof(DBFilterAttribute)).Any()
         ).ToArray();
         
-        fields = typeof(T).GetFields().Where(
+        fields = type.GetFields().Where(
             field => field.GetCustomAttributes(typeof(DBFilterAttribute)).Any()
         ).ToArray();
 
@@ -35,11 +42,24 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
         database = databaseName;
         connection = new SQLiteConnection($"Data Source={database};Version=3;");
         connection.Open();
+
+        if (idField is not null) return;
+        
+        using var query = new SQLiteCommand($"PRAGMA table_info({tableName})", connection);
+        var reader = query.ExecuteReader();
+
+        while (reader.Read())
+        {
+            var name = reader.GetString(1);
+            if (reader.GetInt32(5) != 1) continue;
+            idField = name;
+            break;
+        }
     }
 
-    public IEnumerable<T> GetAll(string table)
+    public IEnumerable<T> GetAll()
     {
-        var selectQuery = $"SELECT Json FROM {table}";
+        var selectQuery = $"SELECT Json FROM {tableName}";
         using var query = new SQLiteCommand(selectQuery, connection);
         using var reader = query.ExecuteReader();
         
@@ -48,30 +68,30 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
         //serializer.Serialize( Enumerable.Range(0, reader.FieldCount - 1).ToDictionary(i => reader.GetName(i), i => reader.GetValue(i)) );
     }
     
-    public T FindById(string table, int id)
+    public T GetById(int id)
     {
-        var selectQuery = $"SELECT Json FROM {table} WHERE Id = {id}";
+        var selectQuery = $"SELECT Json FROM {tableName} WHERE {idField}={id}";
         using var query = new SQLiteCommand(selectQuery, connection);
         using var reader = query.ExecuteReader();
         
         return JsonConvert.DeserializeObject<T>((string)reader["Json"]);
     }
 
-    public IEnumerable<T> FindByFilter(string table, Dictionary<string, object[]> filterValues)
+    public IEnumerable<T> GetByFilter(Dictionary<string, object[]> filterValues)
     {
         if (filterValues is null)
-            throw new ArgumentException();
+            throw new ArgumentException("Filters cannot be null.");
         
         if (filterValues.Count == 0)
         {
-            foreach (var result in GetAll(table))
+            foreach (var result in GetAll())
                 yield return result;
             yield break;
         }
         
-        var queryBuilder = new StringBuilder($"SELECT Json FROM {table}");
+        var queryBuilder = new StringBuilder($"SELECT Json FROM {tableName}");
         var wherePieces = filterValues.Select(kvp =>
-            filters.TryGetValue(kvp.Key, out var filterAttr) ? filterAttr.Evaluate(kvp.Value) : "").ToArray();
+            filters.TryGetValue(kvp.Key, out var filterAttr) ? filterAttr.Evaluate(kvp.Value) : "").Where(piece => piece.Any()).ToArray();
 
         if (wherePieces.Length > 0)
         {
@@ -85,39 +105,43 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
             yield return JsonConvert.DeserializeObject<T>((string)reader["Json"]);
     }
 
-    public void Update(string table, int id, T newObj)
+    public void Update(int id, T newObj)
     {
         var propNames = string.Join(',', properties.Select(p => p.Name));
-        var propValues = string.Join(',', properties.Select(p => p.GetValue(newObj)));
+        var propValues = string.Join(',', properties.Select(p => FormatEntry(p.GetValue(newObj))));
 
         var fieldNames = string.Join(',', fields.Select(f => f.Name));
-        var fieldValues = string.Join(',', fields.Select(f => f.GetValue(newObj)));
+        var fieldValues = string.Join(',', fields.Select(f => FormatEntry(f.GetValue(newObj))));
         
         var json = JsonConvert.SerializeObject(newObj);
+        var names = string.Join(',', string.Join(',', idField, propNames , fieldNames, "Json").Split(',', StringSplitOptions.RemoveEmptyEntries));
+        var values = string.Join(',', string.Join(',', id.ToString(), propValues, fieldValues, $"\'{json}\'").Split(',', StringSplitOptions.RemoveEmptyEntries));
         
-        var insertionQuery = $"REPLACE INTO {table} (Id,{propNames},{fieldNames},Json) VALUES ({id},{propValues},{fieldValues},{json});";
+        var insertionQuery = $"REPLACE INTO {tableName} ({names}) VALUES ({values});";
         using var query = new SQLiteCommand(insertionQuery, connection);
         query.ExecuteNonQuery();
     }
 
-    public void RemoveById(string table, int id)
+    public void RemoveById(int id)
     {
-        var deletionQuery = $"DELETE FROM {table} WHERE Id={id};";
+        var deletionQuery = $"DELETE FROM {tableName} WHERE {idField}={id};";
         using var query = new SQLiteCommand(deletionQuery, connection);
         query.ExecuteNonQuery();
     }
-    
-    public void Add(string table, T obj)
+
+    public void Add(T obj)
     {
         var propNames = string.Join(',', properties.Select(p => p.Name));
-        var propValues = string.Join(',', properties.Select(p => p.GetValue(obj)));
+        var propValues = string.Join(',', properties.Select(p => FormatEntry(p.GetValue(obj))));
 
         var fieldNames = string.Join(',', fields.Select(f => f.Name));
-        var fieldValues = string.Join(',', fields.Select(f => f.GetValue(obj)));
-        
+        var fieldValues = string.Join(',', fields.Select(f => FormatEntry(f.GetValue(obj))));
+
         var json = JsonConvert.SerializeObject(obj);
-        
-        var insertionQuery = $"INSERT INTO {table} ({propNames},{fieldNames},Json) VALUES ({propValues},{fieldValues},{json});";
+        var names = string.Join(',', string.Join(',', propNames , fieldNames, "Json").Split(',', StringSplitOptions.RemoveEmptyEntries));
+        var values = string.Join(',', string.Join(',', propValues, fieldValues, $"\'{json}\'").Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+        var insertionQuery = $"INSERT INTO {tableName} ({names}) VALUES ({values});";
         using var query = new SQLiteCommand(insertionQuery, connection);
         query.ExecuteNonQuery();
     }
@@ -126,5 +150,12 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
     {
         connection.Close();
         connection.Dispose();
+    }
+
+    private string FormatEntry(object entry)
+    {
+        if (entry is null)
+            throw new ArgumentException("Object properties better not be null :)");
+        return entry is string ? $"'{entry}'" : entry.ToString();
     }
 }
