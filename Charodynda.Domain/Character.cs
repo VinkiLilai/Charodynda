@@ -23,18 +23,20 @@ public class Character
     public Character()
     {
         spells = new HashSet<Spell>();
-        //spellSlots = this.InitSpellSlots();
+        levelsInClasses = new Dictionary<Class, int>();
     }
 
+    public readonly int id;
     [JsonProperty("Name")]
     private string name;
-    [JsonProperty("SpellIds")]
-    private HashSet<int> spellIds;
+    [JsonProperty("Spells")]
     private HashSet<Spell> spells;
     [JsonProperty("SpellSlots")]
-    private Dictionary<int, LevelSpellSlots> spellSlots;
-    [JsonProperty("WarlockSpellSlots")]
-    private (int level, LevelSpellSlots spellSlots) warlockSpellSlots;
+    private Dictionary<int, LevelSpellSlots>? spellSlots;
+
+    [JsonProperty("WarlockSpellSlots")] 
+    public (int level, LevelSpellSlots spellSlots)? WarlockSpellSlots { get; private set; }
+
     [JsonProperty("LevelsInClasses")]
     private Dictionary<Class, int> levelsInClasses;
     [JsonProperty("Intelligence")]
@@ -45,13 +47,8 @@ public class Character
     private int charisma;
 
     public IReadOnlyCollection<Spell> Spells => spells.OrderBy(spell => spell.Level).ToList();
-    public IReadOnlyCollection<int> SpellSlots => spellSlots;
+    public IReadOnlyDictionary<int, LevelSpellSlots>? SpellSlots => spellSlots;
     public IReadOnlyDictionary<Class, int> LevelsInClasses => levelsInClasses;
-
-    public Character()
-    {
-        spells = new HashSet<Spell>();
-    }
 
     public string Name
     {
@@ -92,9 +89,9 @@ public class Character
     public void SpellUsage(int level)
     {
         if (levelsInClasses.ContainsKey(Class.Warlock))
-            if (levelsInClasses.Count == 1 || warlockSpellSlots.level == level)
+            if (levelsInClasses.Count == 1 || WarlockSpellSlots.Value.level == level)
             {
-                warlockSpellSlots.spellSlots.Count--;
+                WarlockSpellSlots.Value.spellSlots.Count--;
                 return;
             }
         if (!spellSlots.ContainsKey(level))
@@ -104,9 +101,9 @@ public class Character
 
     public void SlotsUpdate()
     {
-        if (levelsInClasses.ContainsKey(Class.Warlock))
-            warlockSpellSlots.spellSlots.UpdateSpellSlots();
-        if (levelsInClasses.All(pair => pair.Key == Class.Warlock))
+        if (this.HasWarlockClass())
+            WarlockSpellSlots.Value.spellSlots.UpdateSpellSlots();
+        if (this.HasNonWarlockClass())
             return;
         foreach (var slots in spellSlots.Values)
             slots.UpdateSpellSlots();
@@ -117,22 +114,7 @@ public class Character
         if (level < 1)
             throw new ArgumentException("Level cannot be less than the first level");
         levelsInClasses[characterClass] = level;
-        //TODO: Поменять набор ячеек заклинания в соответствии с новым уровнем
-        throw new NotImplementedException();
-    }
-
-    public void AddSpell(Spell spell)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ChangeClassLevel(Class characterClass, int level)
-    {
-        if (level < 1)
-            throw new ArgumentException("Level cannot be less than the first level");
-        levelsInClasses[characterClass] = level;
-        //TODO: Поменять набор ячеек заклинания в соответствии с новым уровнем
-        throw new NotImplementedException();
+        RecalculateSpellSlots();
     }
 
     public void AddSpell(Spell spell)
@@ -150,33 +132,49 @@ public class Character
         if (levelsInClasses.ContainsKey(characterClass))
             return;
         levelsInClasses.Add(characterClass, 1);
-        if (characterClass == Class.Warlock)
-            warlockSpellSlots = this.GetInitialWarlockSpellSlots();
+        RecalculateSpellSlots();
     }
 
     public void RemoveClass(Class characterClass)
     {
-        if (levelsInClasses.ContainsKey(characterClass))
-            levelsInClasses.Remove(characterClass);
+        if (!levelsInClasses.ContainsKey(characterClass))
+            return;
+        levelsInClasses.Remove(characterClass);
+        RecalculateSpellSlots();
     }
+
+    private void RecalculateSpellSlots()
+    {
+        WarlockSpellSlots = this.GetInitialWarlockSpellSlots();
+        spellSlots = this.GetInitialSpellSlots();
+    }
+    
 }
 
 internal static class CharacterExtensions
 {
     public static bool CheckCharacteristics(this int value) => value >= 0;
 
-    public static Dictionary<int, LevelSpellSlots> GetInitialSpellSlots(this Character character)
+    public static Dictionary<int, LevelSpellSlots>? GetInitialSpellSlots(this Character character)
     {
-        var dbSpellSlots = new DatabaseApi<Dictionary<int, LevelSpellSlots>>("SpellSlots.db");
+        const string path = "../../../../Charodynda.Infrastructure/Database/Charodynda.db";
+        var dbSpellSlots = new DatabaseApi<LevelSpellSlots[]>(path);
+        if (!character.HasNonWarlockClass())
+            return null;
         var totalCharacterLevel = CalculateTotalCharacterLevel(character.LevelsInClasses);
-        return dbSpellSlots.FindById("SpellSlots", totalCharacterLevel);
+        return dbSpellSlots.GetById(totalCharacterLevel)
+            .Select((x, i) => (x, i + 1))
+            .ToDictionary(x => x.Item2, x => x.Item1);
     }
 
-    public static (int level, LevelSpellSlots spellSlots) GetInitialWarlockSpellSlots(this Character character)
+    public static (int level, LevelSpellSlots spellSlots)? GetInitialWarlockSpellSlots(this Character character)
     {
-        var dbSpellSlots = new DatabaseApi<(int level, LevelSpellSlots spellSlots)>("SpellSlots.db");
+        // захардкодить
+
+        if (!character.HasWarlockClass())
+            return null;
         var warlockLevel = character.LevelsInClasses[Class.Warlock];
-        return dbSpellSlots.FindById("SpellSlots", warlockLevel);
+        throw new NotImplementedException();
     }
 
     public static int CalculateTotalCharacterLevel(IReadOnlyDictionary<Class, int> levelsInClasses)
@@ -197,4 +195,10 @@ internal static class CharacterExtensions
         }
         return totalLevel;
     }
+
+    public static bool HasWarlockClass(this Character character) =>
+        character.LevelsInClasses.ContainsKey(Class.Warlock);
+    
+    public static bool HasNonWarlockClass(this Character character) =>
+        character.LevelsInClasses.Any(pair => pair.Key != Class.Warlock);
 }

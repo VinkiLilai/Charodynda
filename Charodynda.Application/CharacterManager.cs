@@ -8,20 +8,19 @@ public static class CharacterManager
 {
     static CharacterManager()
     {
-        var serializer = new CharacterSerializer();
-        dbSpells = new DatabaseApi<Character>("Charodynda.db", serializer);
+        dbCharacter = new DatabaseApi<Character>("Charodynda.db");
     }
 
-    private static DatabaseApi<Character> dbSpells;
+    private static DatabaseApi<Character> dbCharacter;
 
-    public static IEnumerable<Character> GetAllCharacters() => dbSpells.GetAll("Characters");
+    public static IEnumerable<Character> GetAllCharacters() => dbCharacter.GetAll();
 
     public static IEnumerable<Spell> GetCharacterSpells(Character character) => character.Spells;
     
     public static Character CreateNewCharacter()
     {
         var newCharacter = new Character();
-        //TODO: добавить персонажа в дата базу
+        dbCharacter.Add(newCharacter);
         return newCharacter;
     }
 
@@ -31,7 +30,7 @@ public static class CharacterManager
         character.Intelligence = intelligenceValue;
         character.Charisma = charismaValue;
         character.Wisdom = wisdomValue;
-        //TODO: обновить это добро в ДБ
+        dbCharacter.Update(id, character);
     }
 
     public static string ChangeCharacterName(Character character, string name)
@@ -41,21 +40,21 @@ public static class CharacterManager
         return character.Name;
     }
 
-    public static IEnumerable<Classes> AddCharacterClass(Character character, Classes characterClass)
+    public static IEnumerable<Class> AddCharacterClass(Character character, Class characterClass)
     {
         character.AddClass(characterClass);
         //TODO: обновить это добро в ДБ
         return character.LevelsInClasses.Keys;
     }
 
-    public static IEnumerable<Classes> RemoveCharacterClass(Character character, Classes characterClass)
+    public static IEnumerable<Class> RemoveCharacterClass(Character character, Class characterClass)
     {
         character.RemoveClass(characterClass);
         //TODO: обновить это добро в ДБ
         return character.LevelsInClasses.Keys;
     }
 
-    public static (Classes characterClass, int level) ChangeClassLevel(Character character, Classes characterClass,
+    public static (Class characterClass, int level) ChangeClassLevel(Character character, Class characterClass,
         int level)
     {
         character.ChangeClassLevel(characterClass, level);
