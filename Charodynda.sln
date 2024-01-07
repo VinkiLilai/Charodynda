@@ -10,6 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.ConsoleTesting", "Charodynda.ConsoleTesting\Charodynda.ConsoleTesting.csproj", "{216CC509-38E1-4D35-8047-FE6A36FC2D5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charodynda.Application", "Charodynda.Application\Charodynda.Application.csproj", "{EDEF5149-3629-4715-AA51-1BE74E50E8A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{608C689C-799D-47E8-92E6-912B8F8ECDB9} = {608C689C-799D-47E8-92E6-912B8F8ECDB9}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +45,9 @@ Global
 		{216CC509-38E1-4D35-8047-FE6A36FC2D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{216CC509-38E1-4D35-8047-FE6A36FC2D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{216CC509-38E1-4D35-8047-FE6A36FC2D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDEF5149-3629-4715-AA51-1BE74E50E8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDEF5149-3629-4715-AA51-1BE74E50E8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDEF5149-3629-4715-AA51-1BE74E50E8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDEF5149-3629-4715-AA51-1BE74E50E8A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
