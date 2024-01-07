@@ -2,10 +2,10 @@
 
 public interface IDatabaseApi<T>
 {
-    IEnumerable<T> GetAll(string table);
-    T FindById(string table, int id);
-    IEnumerable<T> FindByFilter(string table, Dictionary<string, object[]> filterValues);
-    void Update(string table, int id, T newObj);
-    void RemoveById(string table, int id);
-    void Add(string table, T obj);
+    IEnumerable<T> GetAll();
+    T GetById(int id);
+    IEnumerable<T> GetByFilter(Dictionary<string, object[]> filterValues);
+    void Update(int id, T newObj);
+    void RemoveById(int id);
+    void Add(T obj);
 }
