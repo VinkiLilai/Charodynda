@@ -8,6 +8,8 @@ public struct Damage
 
 public enum DamageType
 {
+    None,
+    
     Bludgeoning, 
     Piercing,
     Slashing,

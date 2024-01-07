@@ -35,6 +35,31 @@ public record Spell
     // Лямбда же нужна для того, чтобы сохранять её в базу данных в виде текста,
     // а затем оттуда парсить.
 
+    public Spell(string name, int level, string school, string source, 
+        string castingTime, string range, string duration,
+        IReadOnlyCollection<char> components, IReadOnlyCollection<string> materials,
+        Classes classes, string descripton,
+        bool concetration = false, bool ritual = false, DamageType damageType = DamageType.None,
+        IReadOnlyCollection<string> archetypes = null, Func<int, int, Damage> damage = null)
+    {
+        Name = name;
+        Level = level;
+        School = school;
+        Source = source;
+        CastingTime = castingTime;
+        Range = range;
+        Duration = duration;
+        Components = components;
+        Materials = materials;
+        Concetration = concetration;
+        Ritual = ritual;
+        Classes = classes;
+        Descripton = descripton;
+        this.damageType = damageType;
+        Archetypes = archetypes;
+        this.damage = damage;
+    }
+    
     public Damage Damage(int characterLevel, int spellSlotLevel) 
         => damage(characterLevel, spellSlotLevel);
     // Соответственно, лямбда - это внутренняя информация. Пользователям можно дать красивый API к ней.
