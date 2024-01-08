@@ -22,7 +22,7 @@ public record struct Spell
     public string School { get; }
     
     [JsonProperty("Source")]
-    [DBFilter("Source", FilterType.StrictMany)]
+    [DBFilter("Source", FilterType.PatternMany)]
     public string Source { get; }
     
     [JsonProperty("CastingTime")]
@@ -40,7 +40,7 @@ public record struct Spell
     public string Materials { get; }
     [JsonProperty("Concentration")]
     [DBFilter("Concentration", FilterType.Strict)]
-    public bool Concetration { get; }
+    public bool Concentration { get; }
     [JsonProperty("Ritual")]
     [DBFilter("Ritual", FilterType.Strict)]
     public bool Ritual { get; }
@@ -53,7 +53,7 @@ public record struct Spell
     public IReadOnlyCollection<string> Archetypes { get; }
 
     [JsonProperty("Description")]
-    public string Descripton { get; }
+    public string Description { get; }
     
     [JsonProperty("DamageType")]
     private DamageType damageType; 
@@ -72,6 +72,30 @@ public record struct Spell
         => damage(characterLevel, spellSlotLevel);
     // Соответственно, лямбда - это внутренняя информация. Пользователям можно дать красивый API к ней.
 
+    /*public Spell(string name, int level, string school, string source,
+        string castingTime, string range, string duration, 
+        string components, string materials, bool concentration, bool ritual,
+        Class classDesc, IReadOnlyCollection<string> archetypes, string description)
+    {
+        Name = name;
+        Level = level;
+        School = school;
+        Source = source;
+        CastingTime = castingTime;
+        Range = range;
+        Duration = duration;
+        Components = components;
+        Materials = materials;
+        Concentration = concentration;
+        Ritual = ritual;
+        Class = classDesc;
+        Archetypes = archetypes;
+        Description = description;
+
+        damageType = DamageType.None;
+        damage = null;
+    }*/
+    
     public override string ToString()
     {
         var type = GetType();

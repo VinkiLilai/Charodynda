@@ -9,7 +9,7 @@ public static class Parser
         => GetAllSpellLinks()
             .Select(ParseOneSpellPage);
 
-    private static IEnumerable<string> GetAllSpellLinks()
+    public static IEnumerable<string> GetAllSpellLinks()
     {
         var doc = GetHtml("https://dnd.su/spells/");
         var linkListNode = doc.DocumentNode.SelectNodes("//script").First(node => node.InnerHtml.Contains("Fireball"));
@@ -30,7 +30,6 @@ public static class Parser
         {
             {"Name", page.DocumentNode.SelectSingleNode("//h2[@class='card-title']").ChildNodes[0].InnerHtml}
         };
-
         var spellParams = page.DocumentNode.SelectSingleNode("//ul[@class='params card__article-body']").ChildNodes;
         var spellParamsNameDict = GetParamsNameDict();
 
@@ -80,5 +79,6 @@ public static class Parser
         {"Классы", "Classes"},
         {"Архетипы", "Archetypes"},
         {"Источник", "Source"},
+        {"Источники", "Source"},
     };
 }

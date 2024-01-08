@@ -139,7 +139,7 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
 
         var json = JsonConvert.SerializeObject(obj);
         var names = string.Join(',', string.Join(',', propNames , fieldNames, "Json").Split(',', StringSplitOptions.RemoveEmptyEntries));
-        var values = string.Join(',', string.Join(',', propValues, fieldValues, $"\'{json}\'").Split(',', StringSplitOptions.RemoveEmptyEntries));
+        var values = string.Join(',', string.Join(',', propValues, fieldValues, FormatEntry(json)).Split(',', StringSplitOptions.RemoveEmptyEntries));
 
         var insertionQuery = $"INSERT INTO {tableName} ({names}) VALUES ({values});";
         using var query = new SQLiteCommand(insertionQuery, connection);
@@ -152,10 +152,14 @@ public class DatabaseApi<T> : IDatabaseApi<T>, IDisposable
         connection.Dispose();
     }
 
-    private string FormatEntry(object entry)
-    {
-        if (entry is null)
-            throw new ArgumentException("Object properties better not be null :)");
-        return entry is string ? $"'{entry}'" : entry.ToString();
-    }
+    private string FormatEntry(object entry) =>
+        entry switch
+        {
+            null => throw new ArgumentException("Object properties better not be null :)"),
+            string s => $"\"{s.Replace("\"", "\"\"")}\"",
+            bool b => b ? "1" : "0",
+            Enum e => $"{Convert.ToInt32(e)}", 
+            _ => entry.ToString()
+        } ?? throw new InvalidOperationException();
+
 }

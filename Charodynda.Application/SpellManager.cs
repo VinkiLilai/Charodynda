@@ -8,7 +8,12 @@ public static class SpellManager
 {
     static SpellManager()
     {
-        const string path = "../../../../Charodynda.Infrastructure/Database/Charodynda.db";
+        var path = Path.GetFullPath(
+            Path.Combine(
+                Environment.CurrentDirectory.Split("Charodynda")[0], 
+                "Charodynda/Charodynda.Infrastructure/Database/Charodynda.db"
+            )
+        );
         dbSpells = new DatabaseApi<Spell>(path);
     }
 

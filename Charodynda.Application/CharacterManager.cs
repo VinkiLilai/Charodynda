@@ -7,7 +7,12 @@ public static class CharacterManager
 {
     static CharacterManager()
     {
-        const string path = "../../../../Charodynda.Infrastructure/Database/Charodynda.db";
+        var path = Path.GetFullPath(
+            Path.Combine(
+                Environment.CurrentDirectory.Split("Charodynda")[0], 
+                "Charodynda/Charodynda.Infrastructure/Database/Charodynda.db"
+                )
+            );
         dbCharacter = new DatabaseApi<Character>(path);
     }
 
