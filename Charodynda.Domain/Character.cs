@@ -156,14 +156,36 @@ public static class CharacterExtensions
             .ToDictionary(x => x.Item2, x => x.Item1);
     }
 
+    public static readonly Dictionary<int, (int, LevelSpellSlots)> warlockSpellSlots = new()
+    {
+        {1, (1, new LevelSpellSlots(1))},
+        {2, (1, new LevelSpellSlots(2))},
+        {3, (2, new LevelSpellSlots(2))},
+        {4, (2, new LevelSpellSlots(2))},
+        {5, (3, new LevelSpellSlots(2))},
+        {6, (3, new LevelSpellSlots(2))},
+        {7, (4, new LevelSpellSlots(2))},
+        {8, (4, new LevelSpellSlots(2))},
+        {9, (5, new LevelSpellSlots(2))},
+        {10, (5, new LevelSpellSlots(2))},
+        {11, (5, new LevelSpellSlots(3))},
+        {12, (5, new LevelSpellSlots(3))},
+        {13, (5, new LevelSpellSlots(3))},
+        {14, (5, new LevelSpellSlots(3))},
+        {15, (5, new LevelSpellSlots(3))},
+        {16, (5, new LevelSpellSlots(3))},
+        {17, (5, new LevelSpellSlots(4))},
+        {18, (5, new LevelSpellSlots(4))},
+        {19, (5, new LevelSpellSlots(4))},
+        {20, (5, new LevelSpellSlots(4))}
+    };
+    
     public static (int level, LevelSpellSlots spellSlots)? GetInitialWarlockSpellSlots(this Character character)
     {
-        // захардкодить
-
         if (!character.HasWarlockClass())
             return null;
         var warlockLevel = character.LevelsInClasses[Class.Warlock];
-        throw new NotImplementedException();
+        return warlockSpellSlots[warlockLevel];
     }
 
     public static int CalculateTotalCharacterLevel(IReadOnlyDictionary<Class, int> levelsInClasses)
@@ -178,7 +200,7 @@ public static class CharacterExtensions
             else if (oneThirdLevelClasses.Contains(pair.Key))
                 totalLevel += (int) Math.Floor((double) pair.Value / 3);
             else if (pair.Key is Class.Artificer)
-                totalLevel += (int) Math.Ceiling((double) pair.Value / 2);
+                totalLevel += (int) Math.Ceiling((double) pair.Value / 2); 
             else if (pair.Key != Class.Warlock)
                 totalLevel += pair.Value;
         }
